@@ -13,6 +13,8 @@ pipeline{
 
 
         stage('sonar quality analysis'){
+            def mvnHome = tool name: 'Apache Maven 3.6.0', type: 'maven'
+            // sh "${mvnHome}/bin/mvn -B -DskipTests clean package"
             // agent{
             //     docker{
             //         image'maven'
@@ -21,7 +23,8 @@ pipeline{
             steps{
                 script{
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
-                        sh 'mvn clean package sonar:sonar'
+                        //sh 'mvn clean package sonar:sonar'
+                        sh "${mvnHome}/bin/mvn clean package sonar:sonar"
                     }
                 }
             }
